@@ -83,7 +83,7 @@ class Bot:
         today = datetime.now()
 
         # If it's 18:00pm.
-        if ((f"{today.hour}:{today.minute}") == "22:5") and today.second <= 10:
+        if ((f"{today.hour}:{today.minute}") == "22:10") and today.second <= 10:
             logging.info("tweeting daily status")
             # Import all daily_tweets from the 'daily_tweets.txt' into a list without the '\n' character
             with open ("daily_tweets.txt", "r") as daily_tweets_file:
