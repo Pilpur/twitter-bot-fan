@@ -1,1 +1,1 @@
-worker: python main.py -d
+worker:python main.py -v

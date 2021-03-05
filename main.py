@@ -83,7 +83,7 @@ class Bot:
         today = datetime.now()
 
         # If it's 18:00pm.
-        if ((f"{today.hour}:{today.minute}") == "18:0") and today.second <= 10:
+        if ((f"{today.hour}:{today.minute}") == "22:0") and today.second <= 10:
             logging.info("tweeting daily status")
             # Import all daily_tweets from the 'daily_tweets.txt' into a list without the '\n' character
             with open ("daily_tweets.txt", "r") as daily_tweets_file:
@@ -99,7 +99,7 @@ class Bot:
             logging.debug("found random daily_tweet")
 
             try:
-                # TODO : self.api.PostUpdate(daily_tweet)
+                self.api.PostUpdate(daily_tweet)
                 logging.info("Daily tweet posted")
                 time.sleep(10)
             except logging.error as e:
@@ -117,8 +117,7 @@ class Bot:
             self.post_daily_tweet()
 
             # Get the last tweet from the target user.
-            self.tweet = self.api.GetUserTimeline(user_id = 740601841264758784, screen_name = "Louis__grt", include_rts = False, exclude_replies = True, since_id= 0, count = 1)[0]
-            print(self.tweet)
+            self.tweet = self.api.GetUserTimeline(user_id = user_id, screen_name = screen_name, include_rts = False, exclude_replies = True, since_id= 0, count = 1)[0]
 
             # When a new tweet is posted, initialize the values.
             if self.last_tweet.full_text != self.tweet.full_text:
@@ -136,7 +135,7 @@ class Bot:
 
                 # Post a comment under last user's tweet. Comment = '@user message'
                 try:
-                    # TODO : self.api.PostUpdate(tag + message , in_reply_to_status_id = self.tweet.id)
+                    self.api.PostUpdate(tag + message , in_reply_to_status_id = self.tweet.id)
                     logging.info("Reply posted")
                     time.sleep(5)
                 except logging.error as e:
