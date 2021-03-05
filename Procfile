@@ -1,1 +1,1 @@
-worker: python BotFan.py
+worker: python BotFan.py -d
