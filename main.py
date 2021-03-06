@@ -49,7 +49,7 @@ class Bot:
     """Create the bot"""
     def __init__(self):
         """Initialize the bot."""
-        logging.info("Initializing the bot")
+        logging.info(f"Initializing the bot at {datetime.now()}")
         Bot.running = True
         self.api = self.get_config()
         self.last_tweet = None  # Value to stock the last tweet posted
@@ -83,7 +83,7 @@ class Bot:
         today = datetime.now()
 
         # If it's 18:00pm.
-        if ((f"{today.hour}:{today.minute}") == "22:10") and today.second <= 10:
+        if ((f"{today.hour}:{today.minute}") == "18:0") and today.second <= 10:
             logging.info("tweeting daily status")
             # Import all daily_tweets from the 'daily_tweets.txt' into a list without the '\n' character
             with open ("daily_tweets.txt", "r") as daily_tweets_file:
@@ -110,7 +110,7 @@ class Bot:
 
     def run(self):
         """Run the main loop."""
-        print("Bot running")
+        logging.info("Bot running")
         while Bot.running:
             logging.debug("Start loop")
             # Tweet a daily status
