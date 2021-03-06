@@ -50,7 +50,6 @@ class Bot:
     def __init__(self):
         """Initialize the bot."""
         logging.info(f"Initializing the bot at {datetime.now()}")
-        Bot.running = True
         self.api = self.get_config()
         self.last_tweet = None  # Value to stock the last tweet posted
         
@@ -111,7 +110,7 @@ class Bot:
     def run(self):
         """Run the main loop."""
         logging.info("Bot running")
-        while Bot.running:
+        while True:
             logging.debug("Start loop")
             # Tweet a daily status
             self.post_daily_tweet()
@@ -120,7 +119,7 @@ class Bot:
             self.tweet = self.api.GetUserTimeline(user_id = user_id, screen_name = screen_name, include_rts = False, exclude_replies = True, since_id= 0, count = 1)[0]
 
             # When a new tweet is posted, initialize the values.
-            if self.last_tweet.full_text != self.tweet.full_text:
+            if self.last_tweet.text != self.tweet.text:
                 logging.info("user posted a tweet")
                 self.last_tweet = self.tweet
 
@@ -149,3 +148,4 @@ class Bot:
 if __name__ == "__main__":
     """Launch the bot when running the program.""" 
     Bot().run()
+
