@@ -17,7 +17,7 @@ Project is created with:
 * Python-twitter library version: 3.4.2
 	
 ## Setup
-Create a '.env' file as follow and write your key from the Twitter API and the Twitter user information :
+Create a ".env" file as follow and write your key from the Twitter API and the Twitter user information :
 ```
 CONSUMER_KEY=consumer_key
 CONSUMER_SECRET=consumer_secret
@@ -43,4 +43,14 @@ docker build -t pilpur/bot .
 To run the container
 ```
 docker run -it -d -v $PWD/.env:/app/.env --restart=always pilpur/bot
+```
+
+Or you can directly run the bot:
+```
+docker-compose up -d
+```
+
+Open the logs:
+```
+docker-compose logs -f
 ```
