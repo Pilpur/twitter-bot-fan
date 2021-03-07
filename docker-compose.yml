@@ -1,0 +1,9 @@
+version: "2"
+services:
+  bot:
+    container_name: twitter-bot-fan
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
+    env_file: "./.env"
