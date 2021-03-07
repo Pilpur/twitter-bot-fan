@@ -61,6 +61,7 @@ class Bot:
         
         # Get the last tweet from the target user.
         self.tweet = self.api.GetUserTimeline(user_id = user_id, screen_name = screen_name, include_rts = False, exclude_replies = True, since_id= 0, count = 1)[0]
+        logging.info("got user Timeline")
 
         # Store the last tweet posted when the bot starts.
         if not self.last_tweet:
@@ -117,6 +118,8 @@ class Bot:
 
             # Get the last tweet from the target user.
             self.tweet = self.api.GetUserTimeline(user_id = user_id, screen_name = screen_name, include_rts = False, exclude_replies = True, since_id= 0, count = 1)[0]
+            logging.info("got user Timeline")
+            logging.debug(self.tweet.text)
 
             # When a new tweet is posted, initialize the values.
             if self.last_tweet.text != self.tweet.text:
@@ -148,4 +151,3 @@ class Bot:
 if __name__ == "__main__":
     """Launch the bot when running the program.""" 
     Bot().run()
-
