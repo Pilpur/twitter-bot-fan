@@ -52,6 +52,7 @@ class Bot:
         logging.info(f"Initializing the bot at {datetime.now()}")
         self.api = self.get_config()
         self.last_tweet = None  # Value to stock the last tweet posted
+        self.tweet = None
         
         # Import all messages from the 'messages.txt' into a list without the '\n' character
         with open ("messages.txt", "r") as self.love_msg_file:
@@ -60,11 +61,13 @@ class Bot:
             logging.debug("messages.txt loaded")
         
         # Get the last tweet from the target user.
-        self.tweet = self.api.GetUserTimeline(user_id = user_id, screen_name = screen_name, include_rts = False, exclude_replies = True, since_id= 0, count = 1)[0]
-        logging.info("got user Timeline")
+        tweets = self.api.GetUserTimeline(user_id = user_id, screen_name = screen_name, include_rts = False, exclude_replies = True, since_id= 0, count = 1)
+        if tweets:
+            self.tweet = tweets[0]
+            logging.info("got user Timeline")
 
         # Store the last tweet posted when the bot starts.
-        if not self.last_tweet:
+        if self.tweet and not self.last_tweet:
             self.last_tweet = self.tweet
             logging.debug("Last tweet stored")
         
@@ -114,15 +117,18 @@ class Bot:
         while True:
             logging.debug("Start loop")
             # Tweet a daily status
-            self.post_daily_tweet()
+            #self.post_daily_tweet()
 
             # Get the last tweet from the target user.
-            self.tweet = self.api.GetUserTimeline(user_id = user_id, screen_name = screen_name, include_rts = False, exclude_replies = True, since_id= 0, count = 1)[0]
-            logging.info("got user Timeline")
-            logging.debug(self.tweet.text)
+            tweets = self.api.GetUserTimeline(user_id = user_id, screen_name = screen_name, include_rts = False, exclude_replies = True, since_id= 0, count = 1)
+            if tweets:
+                self.tweet = tweets[0]
+                print(self.tweet)
+                logging.info("got user Timeline")
+                logging.debug(self.tweet.text)
 
             # When a new tweet is posted, initialize the values.
-            if self.last_tweet.text != self.tweet.text:
+            if (self.tweet) or ((self.tweet and self.last_tweet) and self.last_tweet.text != self.tweet.text):
                 logging.info("user posted a tweet")
                 self.last_tweet = self.tweet
 
@@ -137,7 +143,7 @@ class Bot:
 
                 # Post a comment under last user's tweet. Comment = '@user message'
                 try:
-                    self.api.PostUpdate(tag + message , in_reply_to_status_id = self.tweet.id)
+                    #self.api.PostUpdate(tag + message , in_reply_to_status_id = self.tweet.id)
                     logging.info("Reply posted")
                     time.sleep(5)
                 except logging.error as e:
