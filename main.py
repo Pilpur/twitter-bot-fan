@@ -117,7 +117,7 @@ class Bot:
         while True:
             logging.debug("Start loop")
             # Tweet a daily status
-            #self.post_daily_tweet()
+            self.post_daily_tweet()
 
             # Get the last tweet from the target user.
             tweets = self.api.GetUserTimeline(user_id = user_id, screen_name = screen_name, include_rts = False, exclude_replies = True, since_id= 0, count = 1)
@@ -143,7 +143,7 @@ class Bot:
 
                 # Post a comment under last user's tweet. Comment = '@user message'
                 try:
-                    #self.api.PostUpdate(tag + message , in_reply_to_status_id = self.tweet.id)
+                    self.api.PostUpdate(tag + message , in_reply_to_status_id = self.tweet.id)
                     logging.info("Reply posted")
                     time.sleep(5)
                 except logging.error as e:
