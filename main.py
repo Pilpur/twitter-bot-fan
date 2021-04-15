@@ -52,7 +52,7 @@ class Bot:
         logging.info(f"Initializing the bot at {datetime.now()}")
         self.api = self.get_config()
         self.last_tweet = None  # Value to stock the last tweet posted
-        self.tweet = None
+        self.tweet = None  # Value to stock the actual tweet posted 
         
         # Import all messages from the 'messages.txt' into a list without the '\n' character
         with open ("messages.txt", "r") as self.love_msg_file:
@@ -128,7 +128,7 @@ class Bot:
                 logging.debug(self.tweet.text)
 
             # When a new tweet is posted, initialize the values.
-            if (self.tweet) or ((self.tweet and self.last_tweet) and self.last_tweet.text != self.tweet.text):
+            if (self.tweet and not self.last_tweet) or ((self.tweet and self.last_tweet) and self.last_tweet.text != self.tweet.text):
                 logging.info("user posted a tweet")
                 self.last_tweet = self.tweet
 
