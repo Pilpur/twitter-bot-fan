@@ -53,6 +53,7 @@ class Bot:
         self.api = self.get_config()
         self.last_tweet = None  # Value to stock the last tweet posted
         self.tweet = None  # Value to stock the actual tweet posted 
+        self.daily_index = 0
         
         # Import all messages from the 'messages.txt' into a list without the '\n' character
         with open ("messages.txt", "r") as self.love_msg_file:
@@ -93,13 +94,14 @@ class Bot:
                 daily_tweets = daily_tweets_file.readlines()
                 daily_tweets = [s.rstrip("\n") for s in daily_tweets]
                 logging.debug("daily_tweets.txt loaded")
-            
-            # Get a rancom index in the list
-            random_index = random.randint(0, len(daily_tweets) - 1)
 
-            # Get a random message from the list of messages wrote.
-            daily_tweet = daily_tweets[random_index]
+            # Get a message from the list of messages wrote.
+            daily_tweet = daily_tweets[self.daily_index]
+            self.daily_index
             logging.debug("found random daily_tweet")
+            logging.info(daily_tweet)
+            if self.daily_index == len(daily_tweets)-1 :
+                self.daily_index = 0
 
             try:
                 self.api.PostUpdate(daily_tweet)
