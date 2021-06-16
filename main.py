@@ -97,7 +97,7 @@ class Bot:
 
             # Get a message from the list of messages wrote.
             daily_tweet = daily_tweets[self.daily_index]
-            self.daily_index
+            self.daily_index += 1
             logging.debug("found random daily_tweet")
             logging.info(daily_tweet)
             if self.daily_index == len(daily_tweets)-1 :
