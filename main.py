@@ -98,9 +98,10 @@ class Bot:
             # Get a message from the list of messages wrote.
             daily_tweet = daily_tweets[self.daily_index]
             self.daily_index += 1
-            logging.debug("found random daily_tweet")
             logging.info(daily_tweet)
-            if self.daily_index == len(daily_tweets)-1 :
+            logging.info(self.daily_index)
+            print(daily_tweet)
+            if self.daily_index == len(daily_tweets) :
                 self.daily_index = 0
 
             try:
@@ -125,7 +126,6 @@ class Bot:
             tweets = self.api.GetUserTimeline(user_id = user_id, screen_name = screen_name, include_rts = False, exclude_replies = True, since_id= 0, count = 1)
             if tweets:
                 self.tweet = tweets[0]
-                print(self.tweet)
                 logging.info("got user Timeline")
                 logging.debug(self.tweet.text)
 
